@@ -1,4 +1,3 @@
-from google.cloud import storage
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -8,7 +7,6 @@ import argparse
 import csv
 import pyqrcode
 
-GOOGLE_APPLICATION_CREDENTIALS = os.getenv('GOOGLE_APPLICATION_CREDENTIALS', None)
 SCALE = 8
 
 def parse_arguments():
@@ -44,8 +42,7 @@ def delete_collection(coll_ref, batch_size):
         return delete_collection(coll_ref, batch_size)
 
 def get_firestore_instance():
-    cred = credentials.Certificate(GOOGLE_APPLICATION_CREDENTIALS)
-    firebase_admin.initialize_app(cred)
+    firebase_admin.initialize_app()
     db = firestore.client()
     return db
 
@@ -67,6 +64,7 @@ def process_csv(params):
     with open(csv_file, newline='') as f:
         reader = csv.DictReader(f)
         for building in reader:
+
             process_building(out_dir, db, building)
 
 

@@ -36,7 +36,8 @@ def process_csv(params):
     with open(csv_file, newline='') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            generateQR(out_dir, row['buildingName'])
+            print(row)
+            generateQR(out_dir, row['buildingName'], row["buildingName"])
 
 
 
